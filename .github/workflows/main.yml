@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - 'v*'
+      - 'middleware-test-*'
 permissions:
   contents: write
   packages: write
@@ -34,21 +35,21 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/keyval-dev/odigos/autoscaler:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-autoscaler:${{ steps.vars.outputs.tag }}
           build-args: SERVICE_NAME=autoscaler
           platforms: linux/amd64,linux/arm64
       - name: Build Scheduler Image
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/keyval-dev/odigos/scheduler:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-scheduler:${{ steps.vars.outputs.tag }}
           build-args: SERVICE_NAME=scheduler
           platforms: linux/amd64,linux/arm64
       - name: Build Instrumentor Image
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/keyval-dev/odigos/instrumentor:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-instrumentor:${{ steps.vars.outputs.tag }}
           build-args: SERVICE_NAME=instrumentor
           platforms: linux/amd64,linux/arm64
       - name: Build Detector Image
@@ -56,7 +57,7 @@ jobs:
         with:
           file: langDetector/Dockerfile
           push: true
-          tags: ghcr.io/keyval-dev/odigos/lang-detector:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-lang-detector:${{ steps.vars.outputs.tag }}
           build-args: SERVICE_NAME=langDetector
           platforms: linux/amd64,linux/arm64
       - name: Build Odiglet Image
@@ -65,7 +66,7 @@ jobs:
           file: odiglet/Dockerfile
           context: odiglet/
           push: true
-          tags: ghcr.io/keyval-dev/odigos/odiglet:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-odiglet:${{ steps.vars.outputs.tag }}
           platforms: linux/amd64,linux/arm64
       - name: Build Init Image
         uses: docker/build-push-action@v4
@@ -73,7 +74,7 @@ jobs:
           file: init/Dockerfile
           context: init/
           push: true
-          tags: ghcr.io/keyval-dev/odigos/init:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-init:${{ steps.vars.outputs.tag }}
           platforms: linux/amd64,linux/arm64
       - name: Build UI Image
         uses: docker/build-push-action@v4
@@ -81,7 +82,7 @@ jobs:
           file: ui/Dockerfile
           context: ui/
           push: true
-          tags: ghcr.io/keyval-dev/odigos/ui:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/odigos-ui:${{ steps.vars.outputs.tag }}
           platforms: linux/amd64,linux/arm64
       - uses: goreleaser/goreleaser-action@v4
         with:
