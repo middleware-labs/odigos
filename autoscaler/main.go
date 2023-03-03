@@ -84,7 +84,7 @@ func main() {
 		HealthProbeBindAddress: probeAddr,
 		Namespace:              utils.GetCurrentNamespace(),
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "f681cfed.odigos.io",
+		LeaderElectionID:       "f681cfed.vision.middleware.io",
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")

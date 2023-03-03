@@ -37,7 +37,7 @@
 - 🔭 **Collector Management** - Auto-scale collectors based on application usage. No need to deploy or configure complex pipelines
 
 <h2 align="center">
-    <a href="https://docs.odigos.io/intro">Getting Started Guide</a> • <a href="https://docs.odigos.io">Documentation</a> • <a href="https://join.slack.com/t/odigos/shared_invite/zt-1d7egaz29-Rwv2T8kyzc3mWP8qKobz~A">Join Slack Community</a>
+    <a href="https://docs.vision.middleware.io/intro">Getting Started Guide</a> • <a href="https://docs.vision.middleware.io">Documentation</a> • <a href="https://join.slack.com/t/odigos/shared_invite/zt-1d7egaz29-Rwv2T8kyzc3mWP8qKobz~A">Join Slack Community</a>
 </h2>
 
 ## Installation
@@ -50,7 +50,7 @@ helm repo add odigos https://keyval-dev.github.io/odigos-charts/
 helm install my-odigos odigos/odigos --namespace odigos-system --create-namespace
 ```
 
-See the [quickstart guide](https://docs.odigos.io/intro) for more details and examples.
+See the [quickstart guide](https://docs.vision.middleware.io/intro) for more details and examples.
 
 ## Supported Destinations
 
@@ -58,7 +58,7 @@ See the [quickstart guide](https://docs.odigos.io/intro) for more details and ex
 
 See [DESTINATIONS.md](DESTINATIONS.md) file for a complete list of supported destinations and the available signals for every destination.
 
-Can't find the destination you need? Help us by following our quick [adding new destination](https://docs.odigos.io/adding-new-dest) guide and submit a PR.
+Can't find the destination you need? Help us by following our quick [adding new destination](https://docs.vision.middleware.io/adding-new-dest) guide and submit a PR.
 
 ## Project Status
 

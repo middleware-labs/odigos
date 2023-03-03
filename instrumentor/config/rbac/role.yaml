@@ -78,7 +78,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - collectorsgroups
   verbs:
@@ -90,13 +90,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - collectorsgroups/finalizers
   verbs:
   - update
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - collectorsgroups/status
   verbs:
@@ -104,7 +104,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - instrumentedapplications
   verbs:
@@ -116,13 +116,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - instrumentedapplications/finalizers
   verbs:
   - update
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - instrumentedapplications/status
   verbs:
@@ -130,7 +130,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - odigos.io
+  - vision.middleware.io
   resources:
   - odigosconfigurations
   verbs:

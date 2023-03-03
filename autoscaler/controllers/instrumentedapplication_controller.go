@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/autoscaler/controllers/datacollection"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -33,9 +34,9 @@ type InstrumentedApplicationReconciler struct {
 	ImagePullSecrets []string
 }
 
-//+kubebuilder:rbac:groups=odigos.io,resources=instrumentedapplications,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=odigos.io,resources=instrumentedapplications/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=odigos.io,resources=instrumentedapplications/finalizers,verbs=update
+//+kubebuilder:rbac:groups=vision.middleware.io,resources=instrumentedapplications,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=vision.middleware.io,resources=instrumentedapplications/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=vision.middleware.io,resources=instrumentedapplications/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

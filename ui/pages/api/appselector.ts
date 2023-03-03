@@ -9,12 +9,12 @@ export default async function persistConfiguration(
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   const response: any = await k8sApi.createNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "odigosconfigurations",
     {
-      apiVersion: "odigos.io/v1alpha1",
+      apiVersion: "vision.middleware.io/v1alpha1",
       kind: "OdigosConfiguration",
       metadata: {
         name: "odigos-config",
@@ -27,7 +27,7 @@ export default async function persistConfiguration(
 
   if (req.body.instMode === "OPT_IN" && req.body.selectedApps) {
     const instApps: any = await k8sApi.listClusterCustomObject(
-      "odigos.io",
+      "vision.middleware.io",
       "v1alpha1",
       "instrumentedapplications"
     );
@@ -40,7 +40,7 @@ export default async function persistConfiguration(
       })
       .forEach(async (item: any) => {
         await k8sApi.replaceNamespacedCustomObject(
-          "odigos.io",
+          "vision.middleware.io",
           "v1alpha1",
           item.metadata.namespace,
           "instrumentedapplications",

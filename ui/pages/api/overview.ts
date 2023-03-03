@@ -13,7 +13,7 @@ export default async function handler(
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   const instAppsResponse: any = await k8sApi.listClusterCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     "instrumentedapplications"
   );
@@ -32,7 +32,7 @@ export default async function handler(
   );
 
   const collectorsResp: any = await k8sApi.listNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "collectorsgroups"
@@ -46,7 +46,7 @@ export default async function handler(
   });
 
   const destResp: any = await k8sApi.listNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "destinations"

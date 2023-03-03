@@ -13,11 +13,11 @@ func NewConfiguration() apiextensionsv1.CustomResourceDefinition {
 			APIVersion: "apiextensions.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigosconfigurations.odigos.io",
+			Name:   "odigosconfigurations.vision.middleware.io",
 			Labels: labels.OdigosSystem,
 		},
 		Spec: apiextensionsv1.CustomResourceDefinitionSpec{
-			Group: "odigos.io",
+			Group: "vision.middleware.io",
 			Names: apiextensionsv1.CustomResourceDefinitionNames{
 				Plural:   "odigosconfigurations",
 				Singular: "odigosconfiguration",

@@ -19,7 +19,7 @@ func (n *nodeJsPatcher) Patch(podSpec *v1.PodTemplateSpec, instrumentation *odig
 				container.Resources.Limits = make(map[v1.ResourceName]resource.Quantity)
 			}
 
-			container.Resources.Limits["instrumentation.odigos.io/nodejs"] = resource.MustParse("1")
+			container.Resources.Limits["instrumentation.vision.middleware.io/nodejs"] = resource.MustParse("1")
 		}
 
 		modifiedContainers = append(modifiedContainers, container)
@@ -30,7 +30,7 @@ func (n *nodeJsPatcher) Patch(podSpec *v1.PodTemplateSpec, instrumentation *odig
 
 func (n *nodeJsPatcher) IsInstrumented(podSpec *v1.PodTemplateSpec, instrumentation *odigosv1.InstrumentedApplication) bool {
 	for _, c := range podSpec.Spec.Containers {
-		if _, exists := c.Resources.Limits["instrumentation.odigos.io/nodejs"]; exists {
+		if _, exists := c.Resources.Limits["instrumentation.vision.middleware.io/nodejs"]; exists {
 			return true
 		}
 	}

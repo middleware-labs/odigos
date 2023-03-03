@@ -2,6 +2,7 @@ package resources
 
 import (
 	"fmt"
+
 	"github.com/keyval-dev/odigos/cli/pkg/labels"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -22,7 +23,7 @@ func NewSchedulerServiceAccount() *corev1.ServiceAccount {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-scheduler",
+			Name:   "vision-scheduler",
 			Labels: labels.OdigosSystem,
 		},
 	}
@@ -35,13 +36,13 @@ func NewSchedulerRoleBinding() *rbacv1.RoleBinding {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-scheduler-leader-election",
+			Name:   "vision-scheduler-leader-election",
 			Labels: labels.OdigosSystem,
 		},
 		Subjects: []rbacv1.Subject{
 			{
 				Kind: "ServiceAccount",
-				Name: "odigos-scheduler",
+				Name: "vision-scheduler",
 			},
 		},
 		RoleRef: rbacv1.RoleRef{
@@ -59,7 +60,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-scheduler",
+			Name:   "vision-scheduler",
 			Labels: labels.OdigosSystem,
 		},
 		Rules: []rbacv1.PolicyRule{
@@ -74,7 +75,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups",
@@ -85,7 +86,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups/finalizers",
@@ -98,7 +99,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups/status",
@@ -115,7 +116,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations",
@@ -126,7 +127,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations/finalizers",
@@ -139,7 +140,7 @@ func NewSchedulerClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations/status",
@@ -156,20 +157,20 @@ func NewSchedulerClusterRoleBinding(ns string) *rbacv1.ClusterRoleBinding {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-scheduler",
+			Name:   "vision-scheduler",
 			Labels: labels.OdigosSystem,
 		},
 		Subjects: []rbacv1.Subject{
 			{
 				Kind:      "ServiceAccount",
-				Name:      "odigos-scheduler",
+				Name:      "vision-scheduler",
 				Namespace: ns,
 			},
 		},
 		RoleRef: rbacv1.RoleRef{
 			APIGroup: "rbac.authorization.k8s.io",
 			Kind:     "ClusterRole",
-			Name:     "odigos-scheduler",
+			Name:     "vision-scheduler",
 		},
 	}
 }
@@ -181,26 +182,26 @@ func NewSchedulerDeployment(version string) *appsv1.Deployment {
 			APIVersion: "apps/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "odigos-scheduler",
+			Name: "vision-scheduler",
 			Labels: map[string]string{
-				"app":                       "odigos-scheduler",
+				"app":                       "vision-scheduler",
 				labels.OdigosSystemLabelKey: labels.OdigosSystemLabelValue,
 			},
 			Annotations: map[string]string{
-				"odigos.io/skip": "true",
+				"vision.middleware.io/skip": "true",
 			},
 		},
 		Spec: appsv1.DeploymentSpec{
 			Replicas: ptrint32(1),
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{
-					"app": "odigos-scheduler",
+					"app": "vision-scheduler",
 				},
 			},
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						"app": "odigos-scheduler",
+						"app": "vision-scheduler",
 					},
 					Annotations: map[string]string{
 						"kubectl.kubernetes.io/default-container": "manager",
@@ -278,7 +279,7 @@ func NewSchedulerDeployment(version string) *appsv1.Deployment {
 						},
 					},
 					TerminationGracePeriodSeconds: ptrint64(10),
-					ServiceAccountName:            "odigos-scheduler",
+					ServiceAccountName:            "vision-scheduler",
 					SecurityContext: &corev1.PodSecurityContext{
 						RunAsNonRoot: ptrbool(true),
 					},

@@ -1,20 +1,20 @@
-domain: odigos.io
+domain: vision.middleware.io
 layout:
 - go.kubebuilder.io/v3
 projectName: scheduler
 repo: github.com/keyval-dev/odigos/scheduler
 resources:
 - controller: true
-  domain: odigos.io
+  domain: vision.middleware.io
   kind: InstrumentedApplication
   version: v1alpha1
 - controller: true
-  domain: odigos.io
+  domain: vision.middleware.io
   kind: CollectorsGroup
   version: v1alpha1
 - controller: true
-  domain: odigos.io
-  group: odigos.io
+  domain: vision.middleware.io
+  group: vision.middleware.io
   kind: Destination
   version: v1alpha1
 version: "3"

@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: destinations.odigos.io
+  name: destinations.vision.middleware.io
 spec:
-  group: odigos.io
+  group: vision.middleware.io
   names:
     kind: Destination
     listKind: DestinationList

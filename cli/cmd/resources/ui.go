@@ -2,6 +2,7 @@ package resources
 
 import (
 	"fmt"
+
 	"github.com/keyval-dev/odigos/cli/pkg/labels"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -64,7 +65,7 @@ func NewUIRole() *rbacv1.Role {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups",
@@ -75,7 +76,7 @@ func NewUIRole() *rbacv1.Role {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups/finalizers",
@@ -88,7 +89,7 @@ func NewUIRole() *rbacv1.Role {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups/status",
@@ -105,7 +106,7 @@ func NewUIRole() *rbacv1.Role {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations",
@@ -116,7 +117,7 @@ func NewUIRole() *rbacv1.Role {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations/finalizers",
@@ -129,7 +130,7 @@ func NewUIRole() *rbacv1.Role {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations/status",
@@ -146,7 +147,7 @@ func NewUIRole() *rbacv1.Role {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"odigosconfigurations",
@@ -157,7 +158,7 @@ func NewUIRole() *rbacv1.Role {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"odigosconfigurations/finalizers",
@@ -213,7 +214,7 @@ func NewUIClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"instrumentedapplications",
@@ -224,7 +225,7 @@ func NewUIClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"instrumentedapplications/finalizers",
@@ -237,7 +238,7 @@ func NewUIClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"instrumentedapplications/status",
@@ -285,7 +286,7 @@ func NewUIDeployment(version string) *appsv1.Deployment {
 				labels.OdigosSystemLabelKey: labels.OdigosSystemLabelValue,
 			},
 			Annotations: map[string]string{
-				"odigos.io/skip": "true",
+				"vision.middleware.io/skip": "true",
 			},
 		},
 		Spec: appsv1.DeploymentSpec{

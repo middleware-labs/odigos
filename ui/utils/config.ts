@@ -6,7 +6,7 @@ const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
 
 export async function getConfiguration(): Promise<any> {
   const response: any = await k8sApi.listNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "odigosconfigurations"

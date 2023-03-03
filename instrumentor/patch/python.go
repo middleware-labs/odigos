@@ -30,7 +30,7 @@ func (p *pythonPatcher) Patch(podSpec *v1.PodTemplateSpec, instrumentation *odig
 				container.Resources.Limits = make(map[v1.ResourceName]resource.Quantity)
 			}
 
-			container.Resources.Limits["instrumentation.odigos.io/python"] = resource.MustParse("1")
+			container.Resources.Limits["instrumentation.vision.middleware.io/python"] = resource.MustParse("1")
 		}
 
 		modifiedContainers = append(modifiedContainers, container)
@@ -41,7 +41,7 @@ func (p *pythonPatcher) Patch(podSpec *v1.PodTemplateSpec, instrumentation *odig
 
 func (p *pythonPatcher) IsInstrumented(podSpec *v1.PodTemplateSpec, instrumentation *odigosv1.InstrumentedApplication) bool {
 	for _, c := range podSpec.Spec.Containers {
-		if _, exists := c.Resources.Limits["instrumentation.odigos.io/python"]; exists {
+		if _, exists := c.Resources.Limits["instrumentation.vision.middleware.io/python"]; exists {
 			return true
 		}
 	}

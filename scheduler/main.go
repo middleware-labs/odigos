@@ -70,7 +70,7 @@ func main() {
 		Port:                   9443,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "ce024640.odigos.io",
+		LeaderElectionID:       "ce024640.vision.middleware.io",
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")

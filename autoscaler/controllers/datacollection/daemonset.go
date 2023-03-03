@@ -3,6 +3,7 @@ package datacollection
 import (
 	"context"
 	"fmt"
+
 	"github.com/keyval-dev/odigos/autoscaler/controllers/datacollection/custom"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
@@ -19,18 +20,22 @@ import (
 )
 
 const (
-	collectorLabel       = "odigos.io/data-collection"
+	collectorLabel       = "vision.middleware.io/data-collection"
 	containerName        = "data-collection"
-	containerImage       = "keyval/otel-collector-contrib:v0.2"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
-	configHashAnnotation = "odigos.io/config-hash"
-	dataCollectionSA     = "odigos-data-collection"
+	configHashAnnotation = "vision.middleware.io/config-hash"
+	dataCollectionSA     = "vision-data-collection"
 )
 
 var (
 	commonLabels = map[string]string{
 		collectorLabel: "true",
+		// "app":          "mw-app",
+		// "k8s-app":      "mw-app",
+		// "app":          "mw-app",
+		// "k8s-app":      "mw-app",
 	}
 )
 
@@ -93,6 +98,26 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 					},
 				},
 				Spec: corev1.PodSpec{
+					Tolerations: []corev1.Toleration{
+						{
+							Key:      "node-role.kubernetes.io/control-plane",
+							Operator: "Exists",
+							Effect:   "NoSchedule",
+						},
+						{
+							Key:      "node-role.kubernetes.io/master",
+							Operator: "Exists",
+							Effect:   "NoSchedule",
+						},
+						{
+							Operator: "Exists",
+							Effect:   "NoSchedule",
+						},
+						{
+							Operator: "Exists",
+							Effect:   "NoExecute",
+						},
+					},
 					ServiceAccountName: dataCollectionSA,
 					Volumes: []corev1.Volume{
 						{
@@ -119,6 +144,22 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 								},
 							},
 						},
+						// {
+						// 	Name: "varrun",
+						// 	VolumeSource: corev1.VolumeSource{
+						// 		HostPath: &corev1.HostPathVolumeSource{
+						// 			Path: "/var/run/docker.sock",
+						// 		},
+						// 	},
+						// },
+						// {
+						// 	Name: "runcontainerd",
+						// 	VolumeSource: corev1.VolumeSource{
+						// 		HostPath: &corev1.HostPathVolumeSource{
+						// 			Path: "/run/containerd/containerd.sock",
+						// 		},
+						// 	},
+						// },
 						{
 							Name: "varlibdockercontainers",
 							VolumeSource: corev1.VolumeSource{
@@ -138,9 +179,11 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 					},
 					Containers: []corev1.Container{
 						{
-							Name:    containerName,
-							Image:   containerImage,
-							Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Name:            containerName,
+							Image:           containerImage,
+							ImagePullPolicy: "Always",
+							// Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Args: []string{"api-server", "start"},
 							VolumeMounts: []corev1.VolumeMount{
 								{
 									Name:      configKey,
@@ -151,6 +194,16 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 									MountPath: "/var/lib/docker/containers",
 									ReadOnly:  true,
 								},
+								// {
+								// 	Name:      "varrun",
+								// 	MountPath: "/var/run/docker.sock",
+								// 	ReadOnly:  true,
+								// },
+								// {
+								// 	Name:      "runcontainerd",
+								// 	MountPath: "/run/containerd/containerd.sock",
+								// 	ReadOnly:  true,
+								// },
 								{
 									Name:      "varlog",
 									MountPath: "/var/log",
@@ -168,6 +221,44 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 									ValueFrom: &corev1.EnvVarSource{
 										FieldRef: &corev1.ObjectFieldSelector{
 											FieldPath: "spec.nodeName",
+										},
+									},
+								},
+								// {
+								// 	Name: "K8S_NODE_NAME",
+								// 	ValueFrom: &corev1.EnvVarSource{
+								// 		FieldRef: &corev1.ObjectFieldSelector{
+								// 			FieldPath: "spec.nodeName",
+								// 		},
+								// 	},
+								// },
+								// {
+								// 	Name: "K8S_NODE_IP",
+								// 	ValueFrom: &corev1.EnvVarSource{
+								// 		FieldRef: &corev1.ObjectFieldSelector{
+								// 			FieldPath: "spec.hostIP",
+								// 		},
+								// 	},
+								// },
+								{
+									Name: "MW_API_KEY",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "MW_API_KEY",
+										},
+									},
+								},
+								{
+									Name: "TARGET",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "TARGET",
 										},
 									},
 								},

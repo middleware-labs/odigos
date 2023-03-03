@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"errors"
+
 	"github.com/go-logr/logr"
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/common/consts"
@@ -21,7 +22,7 @@ var (
 	//   - cmd.DefaultIgnoredNamespaces
 	//   - Helm chart's instrumentor.ignoredNamespaces field
 	IgnoredNamespaces map[string]bool
-	SkipAnnotation    = "odigos.io/skip"
+	SkipAnnotation    = "vision.middleware.io/skip"
 
 	DeploymentPrefix  = "deployment-"
 	StatefulSetPrefix = "statefulset-"

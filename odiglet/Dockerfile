@@ -15,10 +15,10 @@ ADD https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/relea
 RUN unzip opentelemetry-dotnet-instrumentation-linux-musl.zip && rm opentelemetry-dotnet-instrumentation-linux-musl.zip
 
 FROM golang:1.19 AS builder
-WORKDIR /go/src/github.com/keyval-dev/odigos/odiglet
+WORKDIR /go/src/github.com/keyval-dev/odigos/visioncart
 COPY . .
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -o odiglet cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o visioncart cmd/main.go
 
 WORKDIR /instrumentations
 
@@ -37,7 +37,7 @@ COPY --from=dotnet-builder /dotnet-instrumentation /instrumentations/dotnet
 
 FROM gcr.io/distroless/static-debian10
 WORKDIR /root/
-COPY --from=builder /go/src/github.com/keyval-dev/odigos/odiglet/odiglet .
+COPY --from=builder /go/src/github.com/keyval-dev/odigos/visioncart/visioncart .
 WORKDIR /instrumentations/
 COPY --from=builder /instrumentations/ .
-CMD ["/root/odiglet"]
+CMD ["/root/visioncart"]

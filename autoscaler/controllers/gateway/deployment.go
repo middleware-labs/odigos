@@ -3,6 +3,7 @@ package gateway
 import (
 	"context"
 	"fmt"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/autoscaler/controllers/common"
 	appsv1 "k8s.io/api/apps/v1"
@@ -18,10 +19,10 @@ import (
 
 const (
 	containerName        = "gateway"
-	containerImage       = "keyval/otel-collector-contrib:v0.2"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
-	configHashAnnotation = "odigos.io/config-hash"
+	configHashAnnotation = "vision.middleware.io/config-hash"
 )
 
 func syncDeployment(dests *odigosv1.DestinationList, gateway *odigosv1.CollectorsGroup, configData string,
@@ -133,10 +134,29 @@ func getDesiredDeployment(dests *odigosv1.DestinationList, configData string,
 					},
 					Containers: []corev1.Container{
 						{
-							Name:    containerName,
-							Image:   containerImage,
-							Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Name:            containerName,
+							Image:           containerImage,
+							ImagePullPolicy: "Always",
+							// Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Args:    []string{"api-server", "start"},
 							EnvFrom: getSecretsFromDests(dests),
+							Env: []corev1.EnvVar{
+								{
+									Name:  "MW_API_KEY",
+									Value: "WRONG_KEY",
+								},
+								{
+									Name: "TARGET",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "TARGET",
+										},
+									},
+								},
+							},
 							VolumeMounts: []corev1.VolumeMount{
 								{
 									Name:      configKey,

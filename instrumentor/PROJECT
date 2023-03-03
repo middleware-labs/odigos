@@ -1,4 +1,4 @@
-domain: odigos.io
+domain: vision.middleware.io
 layout:
 - go.kubebuilder.io/v3
 projectName: instrumentor
@@ -8,7 +8,7 @@ resources:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: odigos.io
+  domain: vision.middleware.io
   kind: InstrumentedApplication
   path: github.com/keyval-dev/odigos/api/odigos/v1alpha1
   version: v1alpha1
@@ -26,7 +26,7 @@ resources:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: odigos.io
+  domain: vision.middleware.io
   kind: CollectorsGroup
   path: github.com/keyval-dev/odigos/api/odigos/v1alpha1
   version: v1alpha1

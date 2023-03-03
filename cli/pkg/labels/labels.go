@@ -1,7 +1,7 @@
 package labels
 
 const (
-	OdigosSystemLabelKey   = "odigos.io/system-object"
+	OdigosSystemLabelKey   = "vision.middleware.io/system-object"
 	OdigosSystemLabelValue = "true"
 )
 

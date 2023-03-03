@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/autoscaler/controllers/datacollection"
 	"github.com/keyval-dev/odigos/autoscaler/controllers/gateway"
@@ -37,9 +38,9 @@ type CollectorsGroupReconciler struct {
 	ImagePullSecrets []string
 }
 
-//+kubebuilder:rbac:groups=odigos.io,namespace=odigos-system,resources=collectorsgroups,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=odigos.io,namespace=odigos-system,resources=collectorsgroups/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=odigos.io,namespace=odigos-system,resources=collectorsgroups/finalizers,verbs=update
+//+kubebuilder:rbac:groups=vision.middleware.io,namespace=odigos-system,resources=collectorsgroups,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=vision.middleware.io,namespace=odigos-system,resources=collectorsgroups/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=vision.middleware.io,namespace=odigos-system,resources=collectorsgroups/finalizers,verbs=update
 //+kubebuilder:rbac:groups=apps,namespace=odigos-system,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=apps,namespace=odigos-system,resources=deployments/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=apps,namespace=odigos-system,resources=daemonsets,verbs=get;list;watch;create;update;patch;delete

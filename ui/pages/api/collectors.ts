@@ -9,7 +9,7 @@ async function DeleteCollector(req: NextApiRequest, res: NextApiResponse) {
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   await k8sApi.deleteNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "collectorsgroups",
@@ -26,7 +26,7 @@ async function GetCollectors(
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   const kubeResp: any = await k8sApi.listNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "collectorsgroups"

@@ -3,6 +3,9 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/keyval-dev/odigos/cli/cmd/resources"
 	"github.com/keyval-dev/odigos/cli/pkg/confirm"
 	"github.com/keyval-dev/odigos/cli/pkg/kube"
@@ -11,14 +14,12 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/wait"
-	"strings"
-	"time"
 
 	"github.com/spf13/cobra"
 )
 
 const (
-	odigosDeviceName            = "instrumentation.odigos.io"
+	odigosDeviceName            = "instrumentation.vision.middleware.io"
 	goAgentImage                = "keyval/otel-go-agent"
 	golangKernelDebugVolumeName = "kernel-debug"
 )

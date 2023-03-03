@@ -129,7 +129,7 @@ export const getServerSideProps = async ({ query }: any) => {
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   const response = await k8sApi.getNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "destinations",

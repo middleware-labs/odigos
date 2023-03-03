@@ -1,8 +1,11 @@
 name: Release
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - middleware
+    # tags:
+    #   - 'v*'
+    #   - 'middleware-test-*'
 permissions:
   contents: write
   packages: write
@@ -28,44 +31,44 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Autoscaler Image
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: ghcr.io/keyval-dev/odigos/autoscaler:${{ steps.vars.outputs.tag }}
-          build-args: SERVICE_NAME=autoscaler
-          platforms: linux/amd64,linux/arm64
-      - name: Build Scheduler Image
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: ghcr.io/keyval-dev/odigos/scheduler:${{ steps.vars.outputs.tag }}
-          build-args: SERVICE_NAME=scheduler
-          platforms: linux/amd64,linux/arm64
-      - name: Build Instrumentor Image
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: ghcr.io/keyval-dev/odigos/instrumentor:${{ steps.vars.outputs.tag }}
-          build-args: SERVICE_NAME=instrumentor
-          platforms: linux/amd64,linux/arm64
-      - name: Build Detector Image
-        uses: docker/build-push-action@v4
-        with:
-          file: langDetector/Dockerfile
-          push: true
-          tags: ghcr.io/keyval-dev/odigos/lang-detector:${{ steps.vars.outputs.tag }}
-          build-args: SERVICE_NAME=langDetector
-          platforms: linux/amd64,linux/arm64
+          username: ${{ secrets.GHCR_USER }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      # - name: Build Autoscaler Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-autoscaler:middleware-test-0.0.21
+      #     build-args: SERVICE_NAME=autoscaler
+      #     platforms: linux/amd64,linux/arm64
+      # - name: Build Scheduler Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-scheduler:middleware-test-0.0.3
+      #     build-args: SERVICE_NAME=scheduler
+      #     platforms: linux/amd64,linux/arm64
+      # - name: Build Instrumentor Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-instrumentor:middleware-test-0.0.4
+      #     build-args: SERVICE_NAME=instrumentor
+      #     platforms: linux/amd64,linux/arm64
+      # - name: Build Detector Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     file: langDetector/Dockerfile
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-lang-detector:middleware-test-0.0.2
+      #     build-args: SERVICE_NAME=langDetector
+      #     platforms: linux/amd64,linux/arm64
       - name: Build Odiglet Image
         uses: docker/build-push-action@v4
         with:
           file: odiglet/Dockerfile
           context: odiglet/
           push: true
-          tags: ghcr.io/keyval-dev/odigos/odiglet:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/vision-odiglet:middleware-test-0.0.3
           platforms: linux/amd64,linux/arm64
       - name: Build Init Image
         uses: docker/build-push-action@v4
@@ -73,7 +76,7 @@ jobs:
           file: init/Dockerfile
           context: init/
           push: true
-          tags: ghcr.io/keyval-dev/odigos/init:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/vision-init:middleware-test-0.0.2
           platforms: linux/amd64,linux/arm64
       - name: Build UI Image
         uses: docker/build-push-action@v4
@@ -81,7 +84,7 @@ jobs:
           file: ui/Dockerfile
           context: ui/
           push: true
-          tags: ghcr.io/keyval-dev/odigos/ui:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/middleware-labs/vision-ui:middleware-test-0.0.8
           platforms: linux/amd64,linux/arm64
       - uses: goreleaser/goreleaser-action@v4
         with:

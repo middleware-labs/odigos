@@ -1,4 +1,4 @@
-module github.com/keyval-dev/odigos/odiglet
+module github.com/keyval-dev/odigos/visioncart
 
 go 1.19
 

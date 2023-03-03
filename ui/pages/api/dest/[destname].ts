@@ -7,7 +7,7 @@ async function UpdateDest(req: NextApiRequest, res: NextApiResponse) {
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   const current = await k8sApi.getNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "destinations",
@@ -21,7 +21,7 @@ async function UpdateDest(req: NextApiRequest, res: NextApiResponse) {
   };
 
   const resp = await k8sApi.replaceNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "destinations",
@@ -41,7 +41,7 @@ async function DeleteDest(req: NextApiRequest, res: NextApiResponse) {
   kc.loadFromDefault();
   const k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
   await k8sApi.deleteNamespacedCustomObject(
-    "odigos.io",
+    "vision.middleware.io",
     "v1alpha1",
     process.env.CURRENT_NS || "odigos-system",
     "destinations",

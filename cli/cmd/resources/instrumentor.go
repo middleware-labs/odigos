@@ -2,6 +2,7 @@ package resources
 
 import (
 	"fmt"
+
 	"github.com/keyval-dev/odigos/cli/pkg/labels"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -23,7 +24,7 @@ func NewInstrumentorServiceAccount() *corev1.ServiceAccount {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-instrumentor",
+			Name:   "vision-instrumentor",
 			Labels: labels.OdigosSystem,
 		},
 	}
@@ -36,13 +37,13 @@ func NewInstrumentorRoleBinding() *rbacv1.RoleBinding {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-instrumentor-leader-election",
+			Name:   "vision-instrumentor-leader-election",
 			Labels: labels.OdigosSystem,
 		},
 		Subjects: []rbacv1.Subject{
 			{
 				Kind: "ServiceAccount",
-				Name: "odigos-instrumentor",
+				Name: "vision-instrumentor",
 			},
 		},
 		RoleRef: rbacv1.RoleRef{
@@ -60,7 +61,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-instrumentor",
+			Name:   "vision-instrumentor",
 			Labels: labels.OdigosSystem,
 		},
 		Rules: []rbacv1.PolicyRule{
@@ -194,7 +195,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups",
@@ -205,7 +206,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups/finalizers",
@@ -218,7 +219,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"collectorsgroups/status",
@@ -235,7 +236,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"instrumentedapplications",
@@ -246,7 +247,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"instrumentedapplications/finalizers",
@@ -259,7 +260,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"instrumentedapplications/status",
@@ -276,7 +277,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"odigosconfigurations",
@@ -293,7 +294,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"watch",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations",
@@ -304,7 +305,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations/finalizers",
@@ -317,7 +318,7 @@ func NewInstrumentorClusterRole() *rbacv1.ClusterRole {
 					"update",
 				},
 				APIGroups: []string{
-					"odigos.io",
+					"vision.middleware.io",
 				},
 				Resources: []string{
 					"destinations/status",
@@ -334,20 +335,20 @@ func NewInstrumentorClusterRoleBinding(ns string) *rbacv1.ClusterRoleBinding {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-instrumentor",
+			Name:   "vision-instrumentor",
 			Labels: labels.OdigosSystem,
 		},
 		Subjects: []rbacv1.Subject{
 			{
 				Kind:      "ServiceAccount",
-				Name:      "odigos-instrumentor",
+				Name:      "vision-instrumentor",
 				Namespace: ns,
 			},
 		},
 		RoleRef: rbacv1.RoleRef{
 			APIGroup: "rbac.authorization.k8s.io",
 			Kind:     "ClusterRole",
-			Name:     "odigos-instrumentor",
+			Name:     "vision-instrumentor",
 		},
 	}
 }
@@ -373,26 +374,26 @@ func NewInstrumentorDeployment(version string, telemetryEnabled bool, ignoredNam
 			APIVersion: "apps/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "odigos-instrumentor",
+			Name: "vision-instrumentor",
 			Labels: map[string]string{
-				"app":                       "odigos-instrumentor",
+				"app":                       "vision-instrumentor",
 				labels.OdigosSystemLabelKey: labels.OdigosSystemLabelValue,
 			},
 			Annotations: map[string]string{
-				"odigos.io/skip": "true",
+				"vision.middleware.io/skip": "true",
 			},
 		},
 		Spec: appsv1.DeploymentSpec{
 			Replicas: ptrint32(1),
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{
-					"app": "odigos-instrumentor",
+					"app": "vision-instrumentor",
 				},
 			},
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						"app": "odigos-instrumentor",
+						"app": "vision-instrumentor",
 					},
 					Annotations: map[string]string{
 						"kubectl.kubernetes.io/default-container": "manager",
@@ -466,7 +467,7 @@ func NewInstrumentorDeployment(version string, telemetryEnabled bool, ignoredNam
 						},
 					},
 					TerminationGracePeriodSeconds: ptrint64(10),
-					ServiceAccountName:            "odigos-instrumentor",
+					ServiceAccountName:            "vision-instrumentor",
 					SecurityContext: &corev1.PodSecurityContext{
 						RunAsNonRoot: ptrbool(true),
 					},

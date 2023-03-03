@@ -1,6 +1,6 @@
 # Supported Destinations
 
-**For step by step instructions detailed for every destination see these [docs](https://docs.odigos.io/backends).**
+**For step by step instructions detailed for every destination see these [docs](https://docs.vision.middleware.io/backends).**
 
 ## Managed
 
@@ -33,4 +33,4 @@
 
 **Many more destinations are coming soon.**
 
-Can't find the destination you need? Help us by following our quick [adding new destination](https://docs.odigos.io/adding-new-dest) guide and submit a PR.
+Can't find the destination you need? Help us by following our quick [adding new destination](https://docs.vision.middleware.io/adding-new-dest) guide and submit a PR.
