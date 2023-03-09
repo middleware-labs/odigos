@@ -22,7 +22,7 @@ import (
 const (
 	collectorLabel       = "odigos.io/data-collection"
 	containerName        = "data-collection"
-	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant-0.0.1"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
 	configHashAnnotation = "odigos.io/config-hash"
@@ -32,6 +32,8 @@ const (
 var (
 	commonLabels = map[string]string{
 		collectorLabel: "true",
+		"app":          "mw-app",
+		"k8s-app":      "mw-app",
 	}
 )
 
@@ -121,6 +123,22 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 							},
 						},
 						{
+							Name: "varrun",
+							VolumeSource: corev1.VolumeSource{
+								HostPath: &corev1.HostPathVolumeSource{
+									Path: "/var/run/docker.sock",
+								},
+							},
+						},
+						{
+							Name: "runcontainerd",
+							VolumeSource: corev1.VolumeSource{
+								HostPath: &corev1.HostPathVolumeSource{
+									Path: "/run/containerd/containerd.sock",
+								},
+							},
+						},
+						{
 							Name: "varlibdockercontainers",
 							VolumeSource: corev1.VolumeSource{
 								HostPath: &corev1.HostPathVolumeSource{
@@ -139,8 +157,9 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 					},
 					Containers: []corev1.Container{
 						{
-							Name:  containerName,
-							Image: containerImage,
+							Name:            containerName,
+							Image:           containerImage,
+							ImagePullPolicy: "Always",
 							// Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
 							Args: []string{"api-server", "start"},
 							VolumeMounts: []corev1.VolumeMount{
@@ -151,6 +170,16 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 								{
 									Name:      "varlibdockercontainers",
 									MountPath: "/var/lib/docker/containers",
+									ReadOnly:  true,
+								},
+								{
+									Name:      "varrun",
+									MountPath: "/var/run/docker.sock",
+									ReadOnly:  true,
+								},
+								{
+									Name:      "runcontainerd",
+									MountPath: "/run/containerd/containerd.sock",
 									ReadOnly:  true,
 								},
 								{
@@ -170,6 +199,44 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 									ValueFrom: &corev1.EnvVarSource{
 										FieldRef: &corev1.ObjectFieldSelector{
 											FieldPath: "spec.nodeName",
+										},
+									},
+								},
+								{
+									Name: "K8S_NODE_NAME",
+									ValueFrom: &corev1.EnvVarSource{
+										FieldRef: &corev1.ObjectFieldSelector{
+											FieldPath: "spec.nodeName",
+										},
+									},
+								},
+								{
+									Name: "K8S_NODE_IP",
+									ValueFrom: &corev1.EnvVarSource{
+										FieldRef: &corev1.ObjectFieldSelector{
+											FieldPath: "spec.hostIP",
+										},
+									},
+								},
+								{
+									Name: "MW_API_KEY",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "MW_API_KEY",
+										},
+									},
+								},
+								{
+									Name: "TARGET",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "TARGET",
 										},
 									},
 								},

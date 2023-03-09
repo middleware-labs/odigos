@@ -19,7 +19,7 @@ import (
 
 const (
 	containerName        = "gateway"
-	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant-0.0.1"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
 	configHashAnnotation = "odigos.io/config-hash"
@@ -134,10 +134,36 @@ func getDesiredDeployment(dests *odigosv1.DestinationList, configData string,
 					},
 					Containers: []corev1.Container{
 						{
-							Name:    containerName,
-							Image:   containerImage,
-							Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Name:            containerName,
+							Image:           containerImage,
+							ImagePullPolicy: "Always",
+							// Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Args:    []string{"api-server", "start"},
 							EnvFrom: getSecretsFromDests(dests),
+							Env: []corev1.EnvVar{
+								{
+									Name: "MW_API_KEY",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "MW_API_KEY",
+										},
+									},
+								},
+								{
+									Name: "TARGET",
+									ValueFrom: &corev1.EnvVarSource{
+										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
+											LocalObjectReference: corev1.LocalObjectReference{
+												Name: "mw-configmap",
+											},
+											Key: "TARGET",
+										},
+									},
+								},
+							},
 							VolumeMounts: []corev1.VolumeMount{
 								{
 									Name:      configKey,
