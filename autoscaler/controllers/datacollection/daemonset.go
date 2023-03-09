@@ -32,8 +32,8 @@ const (
 var (
 	commonLabels = map[string]string{
 		collectorLabel: "true",
-		"app":          "mw-app",
-		"k8s-app":      "mw-app",
+		// "app":          "mw-app",
+		// "k8s-app":      "mw-app",
 	}
 )
 
@@ -122,22 +122,22 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 								},
 							},
 						},
-						{
-							Name: "varrun",
-							VolumeSource: corev1.VolumeSource{
-								HostPath: &corev1.HostPathVolumeSource{
-									Path: "/var/run/docker.sock",
-								},
-							},
-						},
-						{
-							Name: "runcontainerd",
-							VolumeSource: corev1.VolumeSource{
-								HostPath: &corev1.HostPathVolumeSource{
-									Path: "/run/containerd/containerd.sock",
-								},
-							},
-						},
+						// {
+						// 	Name: "varrun",
+						// 	VolumeSource: corev1.VolumeSource{
+						// 		HostPath: &corev1.HostPathVolumeSource{
+						// 			Path: "/var/run/docker.sock",
+						// 		},
+						// 	},
+						// },
+						// {
+						// 	Name: "runcontainerd",
+						// 	VolumeSource: corev1.VolumeSource{
+						// 		HostPath: &corev1.HostPathVolumeSource{
+						// 			Path: "/run/containerd/containerd.sock",
+						// 		},
+						// 	},
+						// },
 						{
 							Name: "varlibdockercontainers",
 							VolumeSource: corev1.VolumeSource{
@@ -157,9 +157,9 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 					},
 					Containers: []corev1.Container{
 						{
-							Name:            containerName,
-							Image:           containerImage,
-							ImagePullPolicy: "Always",
+							Name:  containerName,
+							Image: containerImage,
+							// ImagePullPolicy: "Always",
 							// Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
 							Args: []string{"api-server", "start"},
 							VolumeMounts: []corev1.VolumeMount{
@@ -172,16 +172,16 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 									MountPath: "/var/lib/docker/containers",
 									ReadOnly:  true,
 								},
-								{
-									Name:      "varrun",
-									MountPath: "/var/run/docker.sock",
-									ReadOnly:  true,
-								},
-								{
-									Name:      "runcontainerd",
-									MountPath: "/run/containerd/containerd.sock",
-									ReadOnly:  true,
-								},
+								// {
+								// 	Name:      "varrun",
+								// 	MountPath: "/var/run/docker.sock",
+								// 	ReadOnly:  true,
+								// },
+								// {
+								// 	Name:      "runcontainerd",
+								// 	MountPath: "/run/containerd/containerd.sock",
+								// 	ReadOnly:  true,
+								// },
 								{
 									Name:      "varlog",
 									MountPath: "/var/log",

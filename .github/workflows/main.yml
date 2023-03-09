@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/middleware-labs/odigos-autoscaler:middleware-test-0.0.7
+          tags: ghcr.io/middleware-labs/odigos-autoscaler:middleware-test-0.0.8
           build-args: SERVICE_NAME=autoscaler
           platforms: linux/amd64,linux/arm64
       # - name: Build Scheduler Image
@@ -90,4 +90,4 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
