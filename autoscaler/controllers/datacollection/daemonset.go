@@ -32,8 +32,8 @@ const (
 var (
 	commonLabels = map[string]string{
 		collectorLabel: "true",
-		"app":          "mw-app",
-		"k8s-app":      "mw-app",
+		// "app":          "mw-app",
+		// "k8s-app":      "mw-app",
 	}
 )
 
