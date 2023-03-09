@@ -3,6 +3,7 @@ package gateway
 import (
 	"context"
 	"fmt"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/autoscaler/controllers/common"
 	appsv1 "k8s.io/api/apps/v1"
@@ -18,7 +19,7 @@ import (
 
 const (
 	containerName        = "gateway"
-	containerImage       = "keyval/otel-collector-contrib:v0.2"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
 	configHashAnnotation = "odigos.io/config-hash"

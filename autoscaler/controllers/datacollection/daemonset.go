@@ -3,6 +3,7 @@ package datacollection
 import (
 	"context"
 	"fmt"
+
 	"github.com/keyval-dev/odigos/autoscaler/controllers/datacollection/custom"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
@@ -21,7 +22,7 @@ import (
 const (
 	collectorLabel       = "odigos.io/data-collection"
 	containerName        = "data-collection"
-	containerImage       = "keyval/otel-collector-contrib:v0.2"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
 	configHashAnnotation = "odigos.io/config-hash"
@@ -138,9 +139,10 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 					},
 					Containers: []corev1.Container{
 						{
-							Name:    containerName,
-							Image:   containerImage,
-							Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Name:  containerName,
+							Image: containerImage,
+							// Command: []string{containerCommand, fmt.Sprintf("--config=%s/%s.yaml", confDir, configKey)},
+							Args: []string{"api-server", "start"},
 							VolumeMounts: []corev1.VolumeMount{
 								{
 									Name:      configKey,
