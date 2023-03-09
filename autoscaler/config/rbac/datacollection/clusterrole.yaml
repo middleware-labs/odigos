@@ -6,6 +6,29 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - nodes
   - nodes/stats
+  - namespaces
+  - pods
+  - serviceaccounts
+  - services
+  - configmaps
+  - endpoints
+  - persistentvolumeclaims
+  - replicationcontrollers
+  - replicationcontrollers/scale
+  - persistentvolumeclaims
+  - persistentvolumes
+  - bindings
+  - events
+  - limitranges
+  - namespaces/status
+  - pods/log
+  - pods/status
+  - replicationcontrollers/status
+  - resourcequotas
+  - resourcequotas/status
   verbs:
   - get
+  - list
+  - watch
