@@ -39,9 +39,146 @@ func NewDataCollectionClusterRole() *rbacv1.ClusterRole {
 				},
 				APIGroups: []string{""},
 				Resources: []string{
-					"pods",
+					"nodes",
 					"nodes/stats",
-					"nodes/proxy",
+					"namespaces",
+					"pods",
+					"serviceaccounts",
+					"services",
+					"configmaps",
+					"endpoints",
+					"persistentvolumeclaims",
+					"replicationcontrollers",
+					"replicationcontrollers/scale",
+					"persistentvolumeclaims",
+					"persistentvolumes",
+					"bindings",
+					"events",
+					"limitranges",
+					"namespaces/status",
+					"pods/log",
+					"pods/status",
+					"replicationcontrollers/status",
+					"resourcequotas",
+					"resourcequotas/status",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"metrics.k8s.io"},
+				Resources: []string{
+					"nodes",
+					"pods",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+					"patch",
+				},
+				APIGroups: []string{"apps"},
+				Resources: []string{
+					"daemonsets",
+					"deployments",
+					"deployments/scale",
+					"replicasets",
+					"replicasets/scale",
+					"statefulsets",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"autoscaling"},
+				Resources: []string{
+					"horizontalpodautoscalers",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"batch"},
+				Resources: []string{
+					"cronjobs",
+					"jobs",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"extensions"},
+				Resources: []string{
+					"daemonsets",
+					"deployments",
+					"deployments/scale",
+					"networkpolicies",
+					"replicasets",
+					"replicasets/scale",
+					"replicationcontrollers/scale",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"networking.k8s.io"},
+				Resources: []string{
+					"ingresses",
+					"networkpolicies",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"policy"},
+				Resources: []string{
+					"poddisruptionbudgets",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"storage.k8s.io"},
+				Resources: []string{
+					"storageclasses",
+					"volumeattachments",
+				},
+			},
+			{
+				Verbs: []string{
+					"get",
+					"list",
+					"watch",
+				},
+				APIGroups: []string{"rbac.authorization.k8s.io"},
+				Resources: []string{
+					"clusterrolebindings",
+					"clusterroles",
+					"roles",
+					"rolebindings",
 				},
 			},
 		},
