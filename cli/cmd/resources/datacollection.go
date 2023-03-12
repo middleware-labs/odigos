@@ -14,7 +14,7 @@ func NewDataCollectionServiceAccount() *corev1.ServiceAccount {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-data-collection",
+			Name:   "vision-data-collection",
 			Labels: labels.OdigosSystem,
 		},
 	}
@@ -27,7 +27,7 @@ func NewDataCollectionClusterRole() *rbacv1.ClusterRole {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-data-collection",
+			Name:   "vision-data-collection",
 			Labels: labels.OdigosSystem,
 		},
 		Rules: []rbacv1.PolicyRule{
@@ -192,20 +192,20 @@ func NewDataCollectionClusterRoleBinding(ns string) *rbacv1.ClusterRoleBinding {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odigos-data-collection",
+			Name:   "vision-data-collection",
 			Labels: labels.OdigosSystem,
 		},
 		Subjects: []rbacv1.Subject{
 			{
 				Kind:      "ServiceAccount",
-				Name:      "odigos-data-collection",
+				Name:      "vision-data-collection",
 				Namespace: ns,
 			},
 		},
 		RoleRef: rbacv1.RoleRef{
 			APIGroup: "rbac.authorization.k8s.io",
 			Kind:     "ClusterRole",
-			Name:     "odigos-data-collection",
+			Name:     "vision-data-collection",
 		},
 	}
 }

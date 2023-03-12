@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	odigletImage = "ghcr.io/keyval-dev/odigos/odiglet"
+	odigletImage = "ghcr.io/keyval-dev/odigos/visioncart"
 )
 
 func NewOdigletServiceAccount() *corev1.ServiceAccount {
@@ -20,7 +20,7 @@ func NewOdigletServiceAccount() *corev1.ServiceAccount {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odiglet",
+			Name:   "visioncart",
 			Labels: labels.OdigosSystem,
 		},
 	}
@@ -33,7 +33,7 @@ func NewOdigletClusterRole() *rbacv1.ClusterRole {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odiglet",
+			Name:   "visioncart",
 			Labels: labels.OdigosSystem,
 		},
 		Rules: []rbacv1.PolicyRule{
@@ -74,20 +74,20 @@ func NewOdigletClusterRoleBinding(ns string) *rbacv1.ClusterRoleBinding {
 			APIVersion: "rbac.authorization.k8s.io/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   "odiglet",
+			Name:   "visioncart",
 			Labels: labels.OdigosSystem,
 		},
 		Subjects: []rbacv1.Subject{
 			{
 				Kind:      "ServiceAccount",
-				Name:      "odiglet",
+				Name:      "visioncart",
 				Namespace: ns,
 			},
 		},
 		RoleRef: rbacv1.RoleRef{
 			APIGroup: "rbac.authorization.k8s.io",
 			Kind:     "ClusterRole",
-			Name:     "odiglet",
+			Name:     "visioncart",
 		},
 	}
 }
@@ -99,22 +99,22 @@ func NewOdigletDaemonSet(version string) *appsv1.DaemonSet {
 			APIVersion: "apps/v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "odiglet",
+			Name: "visioncart",
 			Labels: map[string]string{
-				"app":                       "odiglet",
+				"app":                       "visioncart",
 				labels.OdigosSystemLabelKey: labels.OdigosSystemLabelValue,
 			},
 		},
 		Spec: appsv1.DaemonSetSpec{
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{
-					"app": "odiglet",
+					"app": "visioncart",
 				},
 			},
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						"app": "odiglet",
+						"app": "visioncart",
 					},
 				},
 				Spec: corev1.PodSpec{
@@ -146,7 +146,7 @@ func NewOdigletDaemonSet(version string) *appsv1.DaemonSet {
 					},
 					Containers: []corev1.Container{
 						{
-							Name:  "odiglet",
+							Name:  "visioncart",
 							Image: fmt.Sprintf("%s:%s", odigletImage, version),
 							Env: []corev1.EnvVar{
 								{
@@ -178,7 +178,7 @@ func NewOdigletDaemonSet(version string) *appsv1.DaemonSet {
 						},
 					},
 					DNSPolicy:          "ClusterFirstWithHostNet",
-					ServiceAccountName: "odiglet",
+					ServiceAccountName: "visioncart",
 					HostNetwork:        true,
 					HostPID:            true,
 				},

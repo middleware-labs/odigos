@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	gatewayName = "odigos-gateway"
+	gatewayName = "vision-gateway"
 )
 
 func NewGateway(namespace string) *odigosv1.CollectorsGroup {

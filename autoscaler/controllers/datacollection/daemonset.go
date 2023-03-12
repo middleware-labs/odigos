@@ -26,7 +26,7 @@ const (
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
 	configHashAnnotation = "odigos.io/config-hash"
-	dataCollectionSA     = "odigos-data-collection"
+	dataCollectionSA     = "vision-data-collection"
 )
 
 var (
@@ -96,6 +96,26 @@ func getDesiredDaemonSet(datacollection *odigosv1.CollectorsGroup, configData st
 					},
 				},
 				Spec: corev1.PodSpec{
+					Tolerations: []corev1.Toleration{
+						{
+							Key:      "node-role.kubernetes.io/control-plane",
+							Operator: "Exists",
+							Effect:   "NoSchedule",
+						},
+						{
+							Key:      "node-role.kubernetes.io/master",
+							Operator: "Exists",
+							Effect:   "NoSchedule",
+						},
+						{
+							Operator: "Exists",
+							Effect:   "NoSchedule",
+						},
+						{
+							Operator: "Exists",
+							Effect:   "NoExecute",
+						},
+					},
 					ServiceAccountName: dataCollectionSA,
 					Volumes: []corev1.Volume{
 						{

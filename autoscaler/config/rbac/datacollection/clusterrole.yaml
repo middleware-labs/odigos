@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: odigos-data-collection
+  name: vision-data-collection
 rules:
   - apiGroups: ["metrics.k8s.io"]
     resources: ["pods", "nodes"]

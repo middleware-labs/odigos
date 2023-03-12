@@ -3,6 +3,7 @@ package datacollection
 import (
 	"context"
 	"fmt"
+
 	"github.com/keyval-dev/odigos/autoscaler/controllers/datacollection/custom"
 
 	"github.com/ghodss/yaml"
@@ -122,7 +123,7 @@ func getConfigMapData(apps *odigosv1.InstrumentedApplicationList, dests *odigosv
 		},
 		Exporters: commonconf.GenericMap{
 			"otlp/gateway": commonconf.GenericMap{
-				"endpoint": fmt.Sprintf("odigos-gateway.%s:4317", utils.GetCurrentNamespace()),
+				"endpoint": fmt.Sprintf("vision-gateway.%s:4317", utils.GetCurrentNamespace()),
 				"tls": commonconf.GenericMap{
 					"insecure": true,
 				},

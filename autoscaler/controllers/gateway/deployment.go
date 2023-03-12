@@ -142,15 +142,8 @@ func getDesiredDeployment(dests *odigosv1.DestinationList, configData string,
 							EnvFrom: getSecretsFromDests(dests),
 							Env: []corev1.EnvVar{
 								{
-									Name: "MW_API_KEY",
-									ValueFrom: &corev1.EnvVarSource{
-										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
-											LocalObjectReference: corev1.LocalObjectReference{
-												Name: "mw-configmap",
-											},
-											Key: "MW_API_KEY",
-										},
-									},
+									Name:  "MW_API_KEY",
+									Value: "WRONG_KEY",
 								},
 								{
 									Name: "TARGET",

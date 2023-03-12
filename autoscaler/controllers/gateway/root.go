@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"context"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -9,7 +10,7 @@ import (
 )
 
 const (
-	kubeObjectName = "odigos-gateway"
+	kubeObjectName = "vision-gateway"
 	collectorLabel = "odigos.io/collector"
 )
 

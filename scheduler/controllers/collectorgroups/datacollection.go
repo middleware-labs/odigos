@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	dataCollectionName = "odigos-data-collection"
+	dataCollectionName = "vision-data-collection"
 )
 
 func NewDataCollection(namespace string) *odigosv1.CollectorsGroup {
