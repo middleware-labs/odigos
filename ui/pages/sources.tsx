@@ -14,7 +14,7 @@ const SourcesPage: NextPage = () => {
 
   return (
     <div className="space-y-12">
-      <div className="text-4xl font-medium">Active Sources</div>
+      <div className="text-4xl font-medium">Active Applications</div>
       <EditAppsGrid {...data} />
     </div>
   );

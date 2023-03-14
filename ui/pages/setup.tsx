@@ -24,7 +24,15 @@ async function submitChanges(instMode: string, selectedApps: string[]) {
   });
 
   if (resp.ok) {
-    window.location.href = "/dest/new";
+    let JSONdata =  JSON.stringify({TRACES: "on", METRICS: "on", LOGS: "on", name: "middleware", otlp_url: "http://localhost:9319", type: "otlp"})
+    await fetch("/api/dests", {
+      body: JSONdata,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+    window.location.href = "/sources";
   }
 }
 
@@ -43,7 +51,7 @@ const SetupPage: NextPage = () => {
     <div>
       <div className="text-5xl mb-6">Choose target applications</div>
       <div>
-        Please select how odigos should choose which applications to instrument
+        Please select how Vision should choose which applications to instrument
         <div className="flex items-center mt-4 ml-2">
           <input
             checked={instrumentationMode === "OPT_OUT"}
@@ -107,7 +115,7 @@ export const getServerSideProps = async () => {
   if (config) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/sources",
         permanent: false,
       },
     };
