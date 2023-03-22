@@ -19,7 +19,7 @@ import (
 
 const (
 	containerName        = "gateway"
-	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:auto-instrument-variant"
+	containerImage       = "ghcr.io/middleware-labs/agent-kube-go:debug"
 	containerCommand     = "/otelcontribcol"
 	confDir              = "/conf"
 	configHashAnnotation = "vision.middleware.io/config-hash"
