@@ -2,6 +2,7 @@ package patch
 
 import (
 	"fmt"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/common"
 	"github.com/keyval-dev/odigos/common/consts"
@@ -27,11 +28,14 @@ func (g *golangPatcher) Patch(podSpec *v1.PodTemplateSpec, instrumentation *odig
 
 	for _, l := range instrumentation.Spec.Languages {
 		if shouldPatch(instrumentation, common.GoProgrammingLanguage, l.ContainerName) {
+
 			if l.ProcessName == "" {
+				fmt.Println("could not find binary path for golang application", l.ContainerName)
 				ctrl.Log.V(0).Info("could not find binary path for golang application",
 					"container", l.ContainerName)
 				continue
 			}
+			fmt.Println("running golang instrumentation for", l.ContainerName)
 
 			appName := l.ContainerName
 			if len(instrumentation.Spec.Languages) == 1 && len(instrumentation.OwnerReferences) > 0 {

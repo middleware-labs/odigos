@@ -47,13 +47,13 @@ jobs:
       #     tags: ghcr.io/middleware-labs/vision-scheduler:middleware-test-0.0.3
       #     build-args: SERVICE_NAME=scheduler
       #     platforms: linux/amd64,linux/arm64
-      # - name: Build Instrumentor Image
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     push: true
-      #     tags: ghcr.io/middleware-labs/vision-instrumentor:middleware-test-0.0.4
-      #     build-args: SERVICE_NAME=instrumentor
-      #     platforms: linux/amd64,linux/arm64
+      - name: Build Instrumentor Image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ghcr.io/middleware-labs/vision-instrumentor:debug
+          build-args: SERVICE_NAME=instrumentor
+          platforms: linux/amd64,linux/arm64
       # - name: Build Detector Image
       #   uses: docker/build-push-action@v4
       #   with:
@@ -62,30 +62,30 @@ jobs:
       #     tags: ghcr.io/middleware-labs/vision-lang-detector:middleware-test-0.0.2
       #     build-args: SERVICE_NAME=langDetector
       #     platforms: linux/amd64,linux/arm64
-      - name: Build Odiglet Image
-        uses: docker/build-push-action@v4
-        with:
-          file: odiglet/Dockerfile
-          context: odiglet/
-          push: true
-          tags: ghcr.io/middleware-labs/vision-odiglet:middleware-test-0.0.3
-          platforms: linux/amd64,linux/arm64
-      - name: Build Init Image
-        uses: docker/build-push-action@v4
-        with:
-          file: init/Dockerfile
-          context: init/
-          push: true
-          tags: ghcr.io/middleware-labs/vision-init:middleware-test-0.0.2
-          platforms: linux/amd64,linux/arm64
-      - name: Build UI Image
-        uses: docker/build-push-action@v4
-        with:
-          file: ui/Dockerfile
-          context: ui/
-          push: true
-          tags: ghcr.io/middleware-labs/vision-ui:middleware-test-0.0.8
-          platforms: linux/amd64,linux/arm64
+      # - name: Build Odiglet Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     file: odiglet/Dockerfile
+      #     context: odiglet/
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-odiglet:middleware-test-0.0.3
+      #     platforms: linux/amd64,linux/arm64
+      # - name: Build Init Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     file: init/Dockerfile
+      #     context: init/
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-init:middleware-test-0.0.2
+      #     platforms: linux/amd64,linux/arm64
+      # - name: Build UI Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     file: ui/Dockerfile
+      #     context: ui/
+      #     push: true
+      #     tags: ghcr.io/middleware-labs/vision-ui:middleware-test-0.0.8
+      #     platforms: linux/amd64,linux/arm64
       - uses: goreleaser/goreleaser-action@v4
         with:
           distribution: goreleaser

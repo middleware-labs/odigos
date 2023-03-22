@@ -2,6 +2,7 @@ package patch
 
 import (
 	"fmt"
+
 	odigosv1 "github.com/keyval-dev/odigos/api/odigos/v1alpha1"
 	"github.com/keyval-dev/odigos/common"
 	v1 "k8s.io/api/core/v1"
@@ -75,7 +76,9 @@ func getLangsInResult(instrumentation *odigosv1.InstrumentedApplication) []commo
 
 func shouldPatch(instrumentation *odigosv1.InstrumentedApplication, lang common.ProgrammingLanguage, containerName string) bool {
 	for _, l := range instrumentation.Spec.Languages {
+		fmt.Println("shouldpatch for", l.ContainerName, containerName, l.Language, lang)
 		if l.ContainerName == containerName && l.Language == lang {
+			fmt.Println("shouldpatch if")
 			// TODO: Handle CGO
 			return true
 		}
